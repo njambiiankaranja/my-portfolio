@@ -2,7 +2,7 @@
 
 My cloud portfolio, a React + Vite site. It can run on Vercel, and the `terraform/` folder runs it on AWS (S3, CloudFront, Lambda) with Terraform.
 
-**Live site:** _add the Vercel or CloudFront address after deploying_
+**Live site:** https://d605v5szaqden.cloudfront.net.
 
 All the site text lives in `web/src/data.js`. To run it locally: `cd web && npm install && npm run dev`.
 

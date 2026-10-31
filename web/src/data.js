@@ -17,7 +17,7 @@ export const profile = {
 export const site = {
   // Change to true once this site is really served from AWS (S3 + CloudFront).
   // It switches on the AWS wording in the footer and the "This portfolio" project card.
-  hostedOnAws: false,
+  hostedOnAws: true,
 };
 
 const gh = (repo) => `https://github.com/njambiiankaranja/${repo}`;
