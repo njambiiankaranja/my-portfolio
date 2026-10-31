@@ -34,24 +34,6 @@ jobs:
           npm ci
           npm run build
 
-      - name: Debug OIDC identity
-        env:
-          ROLE: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
-        run: |
-          echo "role name part: [${ROLE##*/}]"
-          echo "ARN length (expect 54): ${#ROLE}"
-          python3 - <<'PY'
-          import os, json, base64, urllib.request
-          url = os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"] + "&audience=sts.amazonaws.com"
-          req = urllib.request.Request(url, headers={"Authorization": "bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]})
-          tok = json.load(urllib.request.urlopen(req))["value"]
-          p = tok.split(".")[1]
-          p += "=" * (-len(p) % 4)
-          c = json.loads(base64.urlsafe_b64decode(p))
-          for k in ("sub", "aud", "iss", "repository", "ref"):
-              print(k, "=", c.get(k))
-          PY
-
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}

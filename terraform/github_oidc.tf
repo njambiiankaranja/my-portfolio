@@ -21,11 +21,15 @@ data "aws_iam_policy_document" "deploy_assume" {
       variable = "token.actions.githubusercontent.com:aud"
       values   = ["sts.amazonaws.com"]
     }
-    # Only the main branch of this one repo can assume the role
+    # Only the main branch of this one repo can assume the role.
+    # GitHub now includes numeric owner and repo IDs in the subject, so both formats are allowed.
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/main"]
+      values = [
+        "repo:${var.github_repo}:ref:refs/heads/main",
+        "repo:njambiiankaranja@112269571/my-portfolio@1440733393:ref:refs/heads/main",
+      ]
     }
   }
 }
